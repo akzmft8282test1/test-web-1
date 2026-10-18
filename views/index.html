@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>툴 테스트 웹사이트</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; line-height: 1.5; }
+    .card { border: 1px solid #ccc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; }
+    .input-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+    input[type="text"] { width: 100%; padding: 0.5rem; box-sizing: border-box; }
+    .btn-group { display: flex; gap: 10px; margin-top: 1rem; }
+    button { padding: 0.5rem 1rem; cursor: pointer; }
+    #result { padding: 1rem; background-color: #f0f0f0; border-radius: 4px; min-height: 40px; }
+  </style>
+</head>
+<body>
+  <h1>툴 테스트 메인 페이지</h1>
+  <p><a href="/login">🔑 가상 로그인 페이지로 이동하기</a></p>
+
+  <div class="card">
+    <h2>테스트 입력 폼</h2>
+    
+    <div class="input-group">
+      <label for="input1">입력란 1 (텍스트):</label>
+      <input type="text" id="input1" placeholder="테스트할 데이터를 입력하세요 1">
+    </div>
+
+    <div class="input-group">
+      <label for="input2">입력란 2 (옵션 데이터):</label>
+      <input type="text" id="input2" placeholder="테스트할 데이터를 입력하세요 2">
+    </div>
+
+    <div class="btn-group">
+      <button onclick="sendAction('/api/action-a', 'input1')">작동 테스트 A</button>
+      <button onclick="sendAction('/api/action-b', 'input2')">작동 테스트 B</button>
+      <button onclick="clearFields()">입력 초기화</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>응답 결과:</h3>
+    <div id="result">버튼을 클릭하면 응답 메시지가 표시됩니다.</div>
+  </div>
+
+  <script>
+    async function sendAction(url, inputId) {
+      const val = document.getElementById(inputId).value;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: val })
+      });
+      const data = await res.json();
+      document.getElementById('result').innerText = data.message;
+    }
+
+    function clearFields() {
+      document.getElementById('input1').value = '';
+      document.getElementById('input2').value = '';
+      document.getElementById('result').innerText = '입력창이 초기화되었습니다.';
+    }
+  </script>
+</body>
+</html>
