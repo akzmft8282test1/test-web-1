@@ -1,0 +1,12 @@
+{
+  "name": "tool-test-app",
+  "version": "1.0.0",
+  "description": "App for testing custom tools",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
